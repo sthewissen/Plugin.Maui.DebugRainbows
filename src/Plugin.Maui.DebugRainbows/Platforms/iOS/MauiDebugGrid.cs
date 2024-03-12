@@ -1,7 +1,7 @@
 ﻿using CoreAnimation;
 using CoreGraphics;
-using Plugin.Maui.DebugRainbowsControls;
-using Plugin.Maui.DebugRainbowsModels;
+using Plugin.Maui.DebugRainbows.Controls;
+using Plugin.Maui.DebugRainbows.Models;
 using Microsoft.Maui.Platform;
 using UIKit;
 

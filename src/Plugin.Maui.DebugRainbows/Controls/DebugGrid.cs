@@ -1,4 +1,4 @@
-﻿using Plugin.Maui.DebugRainbowsModels;
+﻿using Plugin.Maui.DebugRainbows.Models;
 
 namespace Plugin.Maui.DebugRainbows.Controls;
 

@@ -1,6 +1,6 @@
-﻿using Plugin.Maui.DebugRainbowsControls;
+﻿using Plugin.Maui.DebugRainbows.Controls;
 using Microsoft.Maui.Handlers;
-using Plugin.Maui.DebugRainbowsPlatforms.MaciOS;
+using Plugin.Maui.DebugRainbows.Platforms.MaciOS;
 
 namespace Plugin.Maui.DebugRainbows.Handlers
 {

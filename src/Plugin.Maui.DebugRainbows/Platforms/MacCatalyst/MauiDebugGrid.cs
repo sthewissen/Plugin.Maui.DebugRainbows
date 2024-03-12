@@ -1,4 +1,4 @@
-﻿using Plugin.Maui.DebugRainbowsControls;
+﻿using Plugin.Maui.DebugRainbows.Controls;
 using UIKit;
 
 namespace Plugin.Maui.DebugRainbows.Platforms.MaciOS

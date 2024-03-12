@@ -18,7 +18,6 @@ public static class MauiProgram
             });
 
         builder.Services.AddTransient<MainPage>();
-        builder.Services.AddSingleton<IFeature>(Feature.Default);
 
         return builder.Build();
     }

@@ -1,5 +1,5 @@
-﻿using Plugin.Maui.DebugRainbowsControls;
-using Plugin.Maui.DebugRainbowsPlatforms.Android;
+﻿using Plugin.Maui.DebugRainbows.Controls;
+using Plugin.Maui.DebugRainbows.Platforms.Android;
 using Microsoft.Maui.Handlers;
 
 namespace Plugin.Maui.DebugRainbows.Handlers

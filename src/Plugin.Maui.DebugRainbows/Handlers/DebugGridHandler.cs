@@ -1,14 +1,14 @@
 ﻿#if IOS || MACCATALYST
-using PlatformView = DebugRainbows.Maui.Platforms.MaciOS.MauiDebugGrid;
+using PlatformView = Plugin.Maui.DebugRainbows.Platforms.MaciOS.MauiDebugGrid;
 #elif ANDROID
-using PlatformView = DebugRainbows.Maui.Platforms.Android.MauiDebugGrid;
+using PlatformView = Plugin.Maui.DebugRainbows.Platforms.Android.MauiDebugGrid;
 //#elif WINDOWS
 //using PlatformView = DebugRainbows.Maui.Platforms.Windows.MauiDebugGrid;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !ANDROID)
 using PlatformView = System.Object;
 #endif
 
-using Plugin.Maui.DebugRainbowsControls;
+using Plugin.Maui.DebugRainbows.Controls;
 using Microsoft.Maui.Handlers;
 
 namespace Plugin.Maui.DebugRainbows.Handlers
