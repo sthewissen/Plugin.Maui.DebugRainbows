@@ -64,4 +64,4 @@ Once you have set up DebugRainbows you can use the following properties by passi
 This project could not have come to be without these projects and people, thank you! <3
 
 - The original [DebugRainbows for Xamarin.Forms](https://github.com/sthewissen/Xamarin.Forms.DebugRainbows), also by me :D
-- The ever-inspiring @jfversluis
+- The ever-inspiring [Gerald Versluis](https://github.com/jfversluis)
