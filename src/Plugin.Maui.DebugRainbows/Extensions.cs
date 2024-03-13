@@ -17,7 +17,7 @@ namespace Plugin.Maui.DebugRainbows
         {
             ViewHandler.ElementMapper.AppendToMapping(nameof(DebugRainbows), (handler, view) =>
             {
-                if (view is View l)
+                if (view is not DebugGrid && view is View l)
                     l.BackgroundColor = GetRandomColor();
             });
 
