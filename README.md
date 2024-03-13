@@ -36,7 +36,7 @@ public static MauiApp CreateMauiApp()
     builder
         .UseMauiApp<App>()
         .UseDebugRainbows();
-        // Optionally provide an Options object:
+        // Coming Soon: Optionally provide an Options object:
         //.UseDebugRainbows(new DebugRainbowOptions());
 
     return builder.Build();
@@ -45,19 +45,10 @@ public static MauiApp CreateMauiApp()
 
 ### Features
 
-Once you have set up DebugRainbows you can use the following properties by passing in a `DebugRainbowsOptions` object:
+Once you have set up DebugRainbows it will color all of your UI elements (everything inheriting from `View`) automatically. 
+This way you can verify which elements might be taking up unnecessary space or trace elements that might not be behaving as expected.
 
-#### Properties
-
-##### `HorizontalSpacing`
-
-##### `VerticalSpacing`
-
-##### `GridOrigin`
-
-##### `MajorGridlines`
-
-##### `MinorGridLines`
+🔜 **Coming soon:** additional grid overlay features currently already present in the old Xamarin.Forms version. 
 
 # Acknowledgements
 
