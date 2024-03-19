@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Graphics;
 using Android.Util;
+using AndroidX.Core.View;
 using Plugin.Maui.DebugRainbows.Controls;
 using Microsoft.Maui.Platform;
 using AView = Android.Views.View;
@@ -12,9 +13,8 @@ namespace Plugin.Maui.DebugRainbows.Platforms.Android;
 
 public class MauiDebugGrid : AView
 {
-    readonly DebugGrid _debugGrid;
-    int screenWidth;
-    int screenHeight;
+    private int _screenWidth;
+    private int _screenHeight;
 
     public float HorizontalItemSize { get; set; }
     public float VerticalItemSize { get; set; }
@@ -25,21 +25,19 @@ public class MauiDebugGrid : AView
 
     public MauiDebugGrid(Context? context, DebugGrid debugGrid) : base(context)
     {
-        _debugGrid = debugGrid;
-
-        HorizontalItemSize = (float)_debugGrid.HorizontalItemSize;
-        VerticalItemSize = (float)_debugGrid.VerticalItemSize;
-        MajorGridLines = _debugGrid.MajorGridLines;
-        MinorGridLines = _debugGrid.MinorGridLines;
-        GridOrigin = _debugGrid.GridOrigin;
-        MajorGridLineInterval = _debugGrid.MajorGridLineInterval;
+        HorizontalItemSize = (float)debugGrid.HorizontalItemSize;
+        VerticalItemSize = (float)debugGrid.VerticalItemSize;
+        MajorGridLines = debugGrid.MajorGridLines;
+        MinorGridLines = debugGrid.MinorGridLines;
+        GridOrigin = debugGrid.GridOrigin;
+        MajorGridLineInterval = debugGrid.MajorGridLineInterval;
 
         Init();
     }
 
     public static float ConvertDpToPixel(float dp, Context context)
     {
-        return dp * ((float)context.Resources.DisplayMetrics.DensityDpi / (int)DisplayMetricsDensity.Default);
+        return dp * ((float)context.Resources?.DisplayMetrics?.DensityDpi / (int)DisplayMetricsDensity.Default);
     }
 
     public void Init()
@@ -49,10 +47,20 @@ public class MauiDebugGrid : AView
 
     private void GetScreenDimensions()
     {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        ((Activity)Context).WindowManager.DefaultDisplay.GetMetrics(displayMetrics);
-        screenWidth = displayMetrics.WidthPixels;
-        screenHeight = displayMetrics.HeightPixels;
+        if (OperatingSystem.IsAndroidVersionAtLeast(30))
+        {
+            var windowMetrics = (Context as Activity)?.WindowManager?.CurrentWindowMetrics;
+            var insets = windowMetrics.WindowInsets.GetInsetsIgnoringVisibility(WindowInsetsCompat.Type.SystemBars());
+            _screenWidth = windowMetrics.Bounds.Width() - insets.Left - insets.Right;
+            _screenHeight = windowMetrics.Bounds.Height() - insets.Top - insets.Bottom;
+        }
+        else if (OperatingSystem.IsAndroidVersionAtLeast(21))
+        {
+            var displayMetrics = new DisplayMetrics();
+            (Context as Activity)?.WindowManager?.DefaultDisplay?.GetMetrics(displayMetrics);
+            _screenWidth = displayMetrics.WidthPixels;
+            _screenHeight = displayMetrics.HeightPixels;
+        }
     }
 
     protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
@@ -117,72 +125,82 @@ public class MauiDebugGrid : AView
         minorPaint.Color = MinorGridLines.Color.ToPlatform();
         minorPaint.Alpha = (int)(255 * MinorGridLines.Opacity);
 
-        if (GridOrigin == DebugGridOrigin.TopLeft)
+        switch (GridOrigin)
         {
-            float verticalPosition = 0;
-            int i = 0;
-            while (verticalPosition <= screenHeight)
+            case DebugGridOrigin.TopLeft:
             {
-                canvas.DrawLine(0, verticalPosition, screenWidth, verticalPosition, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
-                verticalPosition += VerticalItemSize;
-                i++;
-            }
+                var verticalPosition = 0f;
+                var i = 0;
+            
+                while (verticalPosition <= _screenHeight)
+                {
+                    canvas.DrawLine(0, verticalPosition, _screenWidth, verticalPosition, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
+                    verticalPosition += VerticalItemSize;
+                    i++;
+                }
 
-            float horizontalPosition = 0;
-            i = 0;
-            while (horizontalPosition <= screenWidth)
+                float horizontalPosition = 0;
+                i = 0;
+                while (horizontalPosition <= _screenWidth)
+                {
+                    canvas.DrawLine(horizontalPosition, 0, horizontalPosition, _screenHeight, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
+                    horizontalPosition += HorizontalItemSize;
+                    i++;
+                }
+
+                break;
+            }
+            case DebugGridOrigin.Center:
             {
-                canvas.DrawLine(horizontalPosition, 0, horizontalPosition, screenHeight, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
-                horizontalPosition += HorizontalItemSize;
-                i++;
+                var gridLinesHorizontalCenter = _screenWidth / 2;
+                var gridLinesVerticalCenter = _screenHeight / 2;
+                var amountOfVerticalLines = _screenWidth / HorizontalItemSize;
+                var amountOfHorizontalLines = _screenHeight / VerticalItemSize;
+
+                // Draw the horizontal lines.
+                for (var i = 0; i < (amountOfHorizontalLines / 2); i++)
+                {
+                    canvas.DrawLine(
+                        startX: 0,
+                        startY: gridLinesVerticalCenter + (i * VerticalItemSize),
+                        stopX: _screenWidth,
+                        stopY: gridLinesVerticalCenter + (i * VerticalItemSize),
+                        paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
+                    );
+
+                    canvas.DrawLine(
+                        startX: 0,
+                        startY: gridLinesVerticalCenter - (i * VerticalItemSize),
+                        stopX: _screenWidth,
+                        stopY: gridLinesVerticalCenter - (i * VerticalItemSize),
+                        paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
+                    );
+                }
+
+                // Draw vertical lines.
+                for (var i = 0; i < (amountOfVerticalLines / 2); i++)
+                {
+                    canvas.DrawLine(
+                        startX: gridLinesHorizontalCenter + (i * HorizontalItemSize),
+                        startY: 0,
+                        stopX: gridLinesHorizontalCenter + (i * HorizontalItemSize),
+                        stopY: _screenHeight,
+                        paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
+                    );
+
+                    canvas.DrawLine(
+                        startX: gridLinesHorizontalCenter - (i * HorizontalItemSize),
+                        startY: 0,
+                        stopX: gridLinesHorizontalCenter - (i * HorizontalItemSize),
+                        stopY: _screenHeight,
+                        paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
+                    );
+                }
+
+                break;
             }
-        }
-        else if (GridOrigin == DebugGridOrigin.Center)
-        {
-            var gridLinesHorizontalCenter = screenWidth / 2;
-            var gridLinesVerticalCenter = screenHeight / 2;
-            var amountOfVerticalLines = screenWidth / HorizontalItemSize;
-            var amountOfHorizontalLines = screenHeight / VerticalItemSize;
-
-            // Draw the horizontal lines.
-            for (int i = 0; i < (amountOfHorizontalLines / 2); i++)
-            {
-                canvas.DrawLine(
-                    startX: 0,
-                    startY: gridLinesVerticalCenter + (i * VerticalItemSize),
-                    stopX: screenWidth,
-                    stopY: gridLinesVerticalCenter + (i * VerticalItemSize),
-                    paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
-                );
-
-                canvas.DrawLine(
-                    startX: 0,
-                    startY: gridLinesVerticalCenter - (i * VerticalItemSize),
-                    stopX: screenWidth,
-                    stopY: gridLinesVerticalCenter - (i * VerticalItemSize),
-                    paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
-                );
-            }
-
-            // Draw vertical lines.
-            for (int i = 0; i < (amountOfVerticalLines / 2); i++)
-            {
-                canvas.DrawLine(
-                    startX: gridLinesHorizontalCenter + (i * HorizontalItemSize),
-                    startY: 0,
-                    stopX: gridLinesHorizontalCenter + (i * HorizontalItemSize),
-                    stopY: screenHeight,
-                    paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
-                );
-
-                canvas.DrawLine(
-                    startX: gridLinesHorizontalCenter - (i * HorizontalItemSize),
-                    startY: 0,
-                    stopX: gridLinesHorizontalCenter - (i * HorizontalItemSize),
-                    stopY: screenHeight,
-                    paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
-                );
-            }
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
