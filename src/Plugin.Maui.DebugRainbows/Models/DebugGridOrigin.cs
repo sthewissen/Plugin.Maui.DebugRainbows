@@ -1,4 +1,4 @@
-﻿namespace Plugin.Maui.DebugRainbows.Models;
+﻿namespace Plugin.Maui.DebugRainbows;
 
 public enum DebugGridOrigin
 {

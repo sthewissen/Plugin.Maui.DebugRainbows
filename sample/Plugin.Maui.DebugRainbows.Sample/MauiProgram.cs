@@ -9,7 +9,22 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            .UseDebugRainbows()
+            
+            // Just get rainbow coloring:
+            // .UseDebugRainbows()
+            
+            // Alternatively provide an Options object:
+            .UseDebugRainbows(new DebugRainbowsOptions{
+                ShowRainbows = false,
+                ShowGrid = true,
+                HorizontalItemSize = 20,
+                VerticalItemSize = 20,
+                MajorGridLineInterval = 4,
+                MajorGridLines = new GridLineOptions { Color = Color.FromRgb(255, 0, 0), Opacity = 1, Width = 4 },
+                MinorGridLines = new GridLineOptions { Color = Color.FromRgb(0, 255, 0), Opacity = 1, Width = 1 },
+                GridOrigin = DebugGridOrigin.Center,
+            })
+            
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

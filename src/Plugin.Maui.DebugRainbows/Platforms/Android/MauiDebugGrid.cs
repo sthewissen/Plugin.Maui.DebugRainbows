@@ -3,7 +3,6 @@ using Android.Content;
 using Android.Graphics;
 using Android.Util;
 using Plugin.Maui.DebugRainbows.Controls;
-using Plugin.Maui.DebugRainbows.Models;
 using Microsoft.Maui.Platform;
 using AView = Android.Views.View;
 using Color = Microsoft.Maui.Graphics.Color;

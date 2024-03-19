@@ -13,9 +13,9 @@ using Microsoft.Maui.Handlers;
 
 namespace Plugin.Maui.DebugRainbows.Handlers
 {
-    public partial class DebugGridHandler
+    public partial class DebugGridHandler() : ViewHandler<DebugGrid, PlatformView>(PropertyMapper) 
     {
-        public static IPropertyMapper<DebugGrid, DebugGridHandler> PropertyMapper = new PropertyMapper<DebugGrid, DebugGridHandler>(ViewHandler.ViewMapper)
+        private static IPropertyMapper<DebugGrid, DebugGridHandler> PropertyMapper = new PropertyMapper<DebugGrid, DebugGridHandler>(ViewMapper)
         {
             [nameof(DebugGrid.MajorGridLineInterval)] = MapMajorGridLineInterval,
             [nameof(DebugGrid.HorizontalItemSize)] = MapHorizontalItemSize,
@@ -24,10 +24,5 @@ namespace Plugin.Maui.DebugRainbows.Handlers
             [nameof(DebugGrid.MinorGridLines)] = MapMinorGridLines,
             [nameof(DebugGrid.GridOrigin)] = MapGridOrigin
         };
-
-        public DebugGridHandler() : base(PropertyMapper)
-        {
-
-        }
     }
 }

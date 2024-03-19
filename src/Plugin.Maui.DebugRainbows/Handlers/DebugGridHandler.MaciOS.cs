@@ -1,10 +1,10 @@
-﻿using Plugin.Maui.DebugRainbows.Controls;
-using Microsoft.Maui.Handlers;
+﻿using Microsoft.Maui.Handlers;
+using Plugin.Maui.DebugRainbows.Controls;
 using Plugin.Maui.DebugRainbows.Platforms.MaciOS;
 
 namespace Plugin.Maui.DebugRainbows.Handlers
 {
-    public partial class DebugGridHandler : ViewHandler<DebugGrid, MauiDebugGrid>
+    public partial class DebugGridHandler
     {
         protected override MauiDebugGrid CreatePlatformView() => new(VirtualView);
 

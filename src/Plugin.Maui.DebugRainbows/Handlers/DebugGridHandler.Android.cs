@@ -4,7 +4,7 @@ using Microsoft.Maui.Handlers;
 
 namespace Plugin.Maui.DebugRainbows.Handlers
 {
-    public partial class DebugGridHandler : ViewHandler<DebugGrid, MauiDebugGrid>
+    public partial class DebugGridHandler
     {
         protected override MauiDebugGrid CreatePlatformView() => new(Context, VirtualView);
 
