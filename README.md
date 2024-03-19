@@ -38,7 +38,7 @@ public static MauiApp CreateMauiApp()
         // This will add the rainbow backgrounds by default.
         .UseDebugRainbows();
 
-        // ALTERNATIVELY, COMING SOON: provide an Options object:
+        // Alternatively provide an Options object:
         .UseDebugRainbows(new DebugRainbowOptions{
            ShowRainbows = true,
            ShowGrid = true,
