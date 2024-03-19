@@ -35,9 +35,20 @@ public static MauiApp CreateMauiApp()
     var builder = MauiApp.CreateBuilder();
     builder
         .UseMauiApp<App>()
+        // This will add the rainbow backgrounds by default.
         .UseDebugRainbows();
-        // Coming Soon: Optionally provide an Options object:
-        //.UseDebugRainbows(new DebugRainbowOptions());
+
+        // Alternatively provide an Options object:
+        .UseDebugRainbows(new DebugRainbowOptions{
+           ShowRainbows = true,
+           ShowGrid = true,
+           HorizontalItemSize = 20,
+           VerticalItemSize = 20,
+           MajorGridLineInterval = 4,
+           MajorGridLines = new GridLineOptions { Color = Color.FromRgb(255, 0, 0), Opacity = 1, Width = 4 },
+           MinorGridLines = new GridLineOptions { Color = Color.FromRgb(255, 0, 0), Opacity = 1, Width = 1 },
+           GridOrigin = DebugGridOrigin.TopLeft,
+        });
 
     return builder.Build();
 }
@@ -47,12 +58,42 @@ public static MauiApp CreateMauiApp()
 
 Once you have set up DebugRainbows it will color all of your UI elements (everything inheriting from `View`) automatically. 
 This way you can verify which elements might be taking up unnecessary space or trace elements that might not be behaving as expected.
+Additionally you have the option to overlay a visual grid onto your page. This grid is completely configurable and helps you identifying areas that might
+not be adhering to the correct padding/margin and other constraints you're adding to your visual elements. Effectively its a digital ruler that you can use to tackle
+all of your alignment problems.
 
-🔜 **Coming soon:** additional grid overlay features currently already present in the old Xamarin.Forms version. 
+#### `DebugRainbowOptions` Properties
+
+##### `ShowRainbows`
+Sets a value indicating whether or not the rainbow-colored backgrounds should be applied.
+
+##### `ShowGrid`
+Sets a value indicating whether or not the alignment grid should be shown.
+
+##### `HorizontalItemSize`
+Sets a value indicating the amount of display units between horizontal grid lines.
+
+##### `VerticalItemSize`
+Sets a value indicating the amount of display units between vertical grid lines.
+
+##### `MajorGridLineInterval`
+Sets a value indicating the interval at which a major grid line is drawn in relation to minor grid lines. A value of `4` means every 4th line will be a major grid line.
+
+##### `MajorGridLines`
+Sets a value representing the styling applied to every major grid line. This is set through the `GridLineOptions` class that exposes the properties `Color`, `Opacity` and `Width` to style a grid line.
+
+##### `MinorGridLines`
+Sets a value representing the styling applied to every minor grid line. This is set through the `GridLineOptions` class that exposes the properties `Color`, `Opacity` and `Width` to style a grid line.
+
+##### `GridOrigin`
+Sets a value representing the origin point of where the grid is initially drawn from. Valid values are:
+
+- `TopLeft`: The grid starts at the top-left corner of the screen.
+- `Center`: There will be a major grid line at the center of the screen and additional grid lines will be drawn relative to this center line.
 
 # Acknowledgements
 
 This project could not have come to be without these projects and people, thank you! <3
 
 - The original [DebugRainbows for Xamarin.Forms](https://github.com/sthewissen/Xamarin.Forms.DebugRainbows), also by me :D
-- The ever-inspiring [Gerald Versluis](https://github.com/jfversluis)
+- The ever-inspiring [Gerald Versluis](https://github.com/jfversluis) 
