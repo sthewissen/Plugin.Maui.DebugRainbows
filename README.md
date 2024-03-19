@@ -89,11 +89,11 @@ Sets a value representing the styling applied to every minor grid line. This is 
 Sets a value representing the origin point of where the grid is initially drawn from. Valid values are:
 
 - `TopLeft`: The grid starts at the top-left corner of the screen.
-- `Center` meaning that there will be a major grid line at the center of the screen and additional grid lines will be drawn relative to this center line.
+- `Center`: There will be a major grid line at the center of the screen and additional grid lines will be drawn relative to this center line.
 
 # Acknowledgements
 
 This project could not have come to be without these projects and people, thank you! <3
 
 - The original [DebugRainbows for Xamarin.Forms](https://github.com/sthewissen/Xamarin.Forms.DebugRainbows), also by me :D
-- The ever-inspiring [Gerald Versluis](https://github.com/jfversluis)
+- The ever-inspiring [Gerald Versluis](https://github.com/jfversluis) 
