@@ -1,8 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Maui.DebugRainbows.Sample", "Plugin.Maui.DebugRainbows.Sample\Plugin.Maui.DebugRainbows.Sample.csproj", "{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Maui.DebugRainbows.Sample", "Plugin.Maui.DebugRainbows.Sample\Plugin.Maui.DebugRainbows.Sample.csproj", "{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.Maui.DebugRainbows", "..\src\Plugin.Maui.DebugRainbows\Plugin.Maui.DebugRainbows.csproj", "{5FF27A3C-4C2F-47E8-8782-6754F1E57AD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Plugin.Maui.DebugRainbows", "..\src\Plugin.Maui.DebugRainbows\Plugin.Maui.DebugRainbows.csproj", "{5FF27A3C-4C2F-47E8-8782-6754F1E57AD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,11 +15,15 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13C79A8D-49C4-4D7E-901E-F8BA7F22A08D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FF27A3C-4C2F-47E8-8782-6754F1E57AD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FF27A3C-4C2F-47E8-8782-6754F1E57AD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FF27A3C-4C2F-47E8-8782-6754F1E57AD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FF27A3C-4C2F-47E8-8782-6754F1E57AD0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 EndGlobal

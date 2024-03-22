@@ -35,6 +35,7 @@ namespace Plugin.Maui.DebugRainbows
                 });
             }
 
+
             if (options.ShowGrid)
             {
                 PageHandler.ElementMapper.AppendToMapping(nameof(DebugRainbows), (handler, view) =>
