@@ -2,8 +2,8 @@
 using PlatformView = Plugin.Maui.DebugRainbows.Platforms.MaciOS.MauiDebugGrid;
 #elif ANDROID
 using PlatformView = Plugin.Maui.DebugRainbows.Platforms.Android.MauiDebugGrid;
-//#elif WINDOWS
-//using PlatformView = DebugRainbows.Maui.Platforms.Windows.MauiDebugGrid;
+#elif WINDOWS
+using PlatformView = Plugin.Maui.DebugRainbows.Platforms.Windows.MauiDebugGrid;
 #elif (NETSTANDARD || !PLATFORM) || (NET6_0_OR_GREATER && !IOS && !ANDROID)
 using PlatformView = System.Object;
 #endif

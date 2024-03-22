@@ -63,35 +63,34 @@ public class MauiDebugGrid : UIView
         if (isMajor && MajorGridLineInterval == 0)
             return;
 
-        using (var path = CreatePath(isMajor ? MajorGridLineInterval : 0))
+        using var path = CreatePath(isMajor ? MajorGridLineInterval : 0);
+
+        layer = new CAShapeLayer
         {
-            layer = new CAShapeLayer
-            {
-                LineWidth = isMajor ? (nfloat)MajorGridLines.Width : (nfloat)MinorGridLines.Width,
-                Path = path.CGPath,
-                StrokeColor = isMajor ? MajorGridLines.Color.ToCGColor() : MinorGridLines.Color.ToCGColor(),
-                Opacity = isMajor ? (float)MajorGridLines.Opacity : (float)MinorGridLines.Opacity,
-                Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
-            };
+            LineWidth = isMajor ? (nfloat)MajorGridLines.Width : (nfloat)MinorGridLines.Width,
+            Path = path.CGPath,
+            StrokeColor = isMajor ? MajorGridLines.Color.ToCGColor() : MinorGridLines.Color.ToCGColor(),
+            Opacity = isMajor ? (float)MajorGridLines.Opacity : (float)MinorGridLines.Opacity,
+            Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height)
+        };
 
-            //if (!MakeGridRainbows)
-            //{
-            this.Layer.AddSublayer(layer);
-            //}
-            //else
-            //{
-            //    var gradientLayer = new CAGradientLayer
-            //    {
-            //        StartPoint = new CGPoint(0.5, 0.0),
-            //        EndPoint = new CGPoint(0.5, 1.0),
-            //        Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height),
-            //        Colors = rainbowColors,
-            //        Mask = layer
-            //    };
+        //if (!MakeGridRainbows)
+        //{
+        this.Layer.AddSublayer(layer);
+        //}
+        //else
+        //{
+        //    var gradientLayer = new CAGradientLayer
+        //    {
+        //        StartPoint = new CGPoint(0.5, 0.0),
+        //        EndPoint = new CGPoint(0.5, 1.0),
+        //        Frame = new CGRect(0, 0, Bounds.Size.Width, Bounds.Size.Height),
+        //        Colors = rainbowColors,
+        //        Mask = layer
+        //    };
 
-            //    this.Layer.AddSublayer(gradientLayer);
-            //}
-        }
+        //    this.Layer.AddSublayer(gradientLayer);
+        //}
     }
     private UIBezierPath CreatePath(int interval = 0)
     {
