@@ -7,6 +7,8 @@ This example README has some dummy APIs you'll need to replace and only acts as 
 
 Have you ever had a piece of XAML code that didn't produce the layout you expected? Did you change the background colors on certain elements to get an idea of where they are positioned? Admit it, you have and pretty much all of us have at some point. Either way, this is the package for you! It adds some nice colorful debug modes to your ContentPages or specific visual elements that let you immediately see where all of your elements are located!
 
+![Debug Rainbows](https://raw.githubusercontent.com/sthewissen/Plugin.Maui.DebugRainbows/main/images/sample.png)
+
 ## Install Plugin
 
 [![NuGet](https://img.shields.io/nuget/v/Plugin.Maui.DebugRainbows.svg?label=NuGet)](https://www.nuget.org/packages/Plugin.Maui.DebugRainbows/)
