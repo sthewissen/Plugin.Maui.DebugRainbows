@@ -5,7 +5,7 @@ namespace Plugin.Maui.DebugRainbows.Handlers
 {
     public partial class DebugGridHandler
     {
-        protected override MauiDebugGrid CreatePlatformView() => throw new NotImplementedException();
+        protected override object CreatePlatformView() => throw new NotImplementedException();
 
         public static void MapMajorGridLineInterval(DebugGridHandler handler, DebugGrid debugGrid) => throw new NotImplementedException();
 	public static void MapMajorGridLines(DebugGridHandler handler, DebugGrid debugGrid) => throw new NotImplementedException();
