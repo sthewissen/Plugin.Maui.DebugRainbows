@@ -14,6 +14,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: Setup .NET 9.0
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 9.0
+      
+    - name: Install MAUI Workload
+      run: dotnet workload install maui --ignore-failed-sources
+      
     - uses: actions/checkout@v4
     - name: Build
       run: dotnet build sample\Plugin.Maui.DebugRainbows.Sample.sln -c Release
