@@ -41,7 +41,8 @@ public static MauiApp CreateMauiApp()
         .UseDebugRainbows();
 
         // Alternatively provide an Options object:
-        .UseDebugRainbows(new DebugRainbowOptions{
+        .UseDebugRainbows(new DebugRainbowsOptions
+        {
            ShowRainbows = true,
            ShowGrid = true,
            HorizontalItemSize = 20,
