@@ -15,9 +15,11 @@ public class MauiDebugGrid : AView
 {
     private int _screenWidth;
     private int _screenHeight;
-
-    public float HorizontalItemSize { get; set; }
-    public float VerticalItemSize { get; set; }
+    private float _majorGridLinesWidthPixels;
+    private float _minorGridLinesWidthPixels;
+    private float _horizontalItemSizePixels;
+    private float _verticalItemSizePixels;
+    
     public int MajorGridLineInterval { get; set; }
     public GridLineOptions MajorGridLines { get; set; }
     public GridLineOptions MinorGridLines { get; set; }
@@ -25,10 +27,12 @@ public class MauiDebugGrid : AView
 
     public MauiDebugGrid(Context? context, DebugGrid debugGrid) : base(context)
     {
-        HorizontalItemSize = (float)debugGrid.HorizontalItemSize;
-        VerticalItemSize = (float)debugGrid.VerticalItemSize;
+        _horizontalItemSizePixels = ConvertDpToPixel((float)debugGrid.HorizontalItemSize, Context);
+        _verticalItemSizePixels = ConvertDpToPixel((float)debugGrid.VerticalItemSize, Context);
         MajorGridLines = debugGrid.MajorGridLines;
         MinorGridLines = debugGrid.MinorGridLines;
+        _majorGridLinesWidthPixels = ConvertDpToPixel((float)MajorGridLines.Width, Context);
+        _minorGridLinesWidthPixels = ConvertDpToPixel((float)MinorGridLines.Width, Context);
         GridOrigin = debugGrid.GridOrigin;
         MajorGridLineInterval = debugGrid.MajorGridLineInterval;
 
@@ -85,12 +89,6 @@ public class MauiDebugGrid : AView
             Color.FromArgb("#c652ba").ToPlatform()
         };
 
-        // Make these into true pixels from DP.
-        HorizontalItemSize = ConvertDpToPixel(HorizontalItemSize, Context);
-        VerticalItemSize = ConvertDpToPixel(VerticalItemSize, Context);
-        MajorGridLines.Width = ConvertDpToPixel((float)MajorGridLines.Width, Context);
-        MinorGridLines.Width = ConvertDpToPixel((float)MinorGridLines.Width, Context);
-
         //if (Inverse)
         //{
         //    DrawInverse(canvas, majorPaint, colors);
@@ -117,11 +115,11 @@ public class MauiDebugGrid : AView
 
     private void DrawNormal(Canvas canvas, Paint majorPaint, Paint minorPaint)
     {
-        majorPaint.StrokeWidth = (float)MajorGridLines.Width;
+        majorPaint.StrokeWidth = _majorGridLinesWidthPixels;
         majorPaint.Color = MajorGridLines.Color.ToPlatform();
         majorPaint.Alpha = (int)(255 * MajorGridLines.Opacity);
 
-        minorPaint.StrokeWidth = (float)MinorGridLines.Width;
+        minorPaint.StrokeWidth = _minorGridLinesWidthPixels;
         minorPaint.Color = MinorGridLines.Color.ToPlatform();
         minorPaint.Alpha = (int)(255 * MinorGridLines.Opacity);
 
@@ -135,7 +133,7 @@ public class MauiDebugGrid : AView
                 while (verticalPosition <= _screenHeight)
                 {
                     canvas.DrawLine(0, verticalPosition, _screenWidth, verticalPosition, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
-                    verticalPosition += VerticalItemSize;
+                    verticalPosition += _verticalItemSizePixels;
                     i++;
                 }
 
@@ -144,7 +142,7 @@ public class MauiDebugGrid : AView
                 while (horizontalPosition <= _screenWidth)
                 {
                     canvas.DrawLine(horizontalPosition, 0, horizontalPosition, _screenHeight, MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint);
-                    horizontalPosition += HorizontalItemSize;
+                    horizontalPosition += _horizontalItemSizePixels;
                     i++;
                 }
 
@@ -154,25 +152,25 @@ public class MauiDebugGrid : AView
             {
                 var gridLinesHorizontalCenter = _screenWidth / 2;
                 var gridLinesVerticalCenter = _screenHeight / 2;
-                var amountOfVerticalLines = _screenWidth / HorizontalItemSize;
-                var amountOfHorizontalLines = _screenHeight / VerticalItemSize;
+                var amountOfVerticalLines = _screenWidth / _horizontalItemSizePixels;
+                var amountOfHorizontalLines = _screenHeight / _verticalItemSizePixels;
 
                 // Draw the horizontal lines.
                 for (var i = 0; i < (amountOfHorizontalLines / 2); i++)
                 {
                     canvas.DrawLine(
                         startX: 0,
-                        startY: gridLinesVerticalCenter + (i * VerticalItemSize),
+                        startY: gridLinesVerticalCenter + (i * _verticalItemSizePixels),
                         stopX: _screenWidth,
-                        stopY: gridLinesVerticalCenter + (i * VerticalItemSize),
+                        stopY: gridLinesVerticalCenter + (i * _verticalItemSizePixels),
                         paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
                     );
 
                     canvas.DrawLine(
                         startX: 0,
-                        startY: gridLinesVerticalCenter - (i * VerticalItemSize),
+                        startY: gridLinesVerticalCenter - (i * _verticalItemSizePixels),
                         stopX: _screenWidth,
-                        stopY: gridLinesVerticalCenter - (i * VerticalItemSize),
+                        stopY: gridLinesVerticalCenter - (i * _verticalItemSizePixels),
                         paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
                     );
                 }
@@ -181,17 +179,17 @@ public class MauiDebugGrid : AView
                 for (var i = 0; i < (amountOfVerticalLines / 2); i++)
                 {
                     canvas.DrawLine(
-                        startX: gridLinesHorizontalCenter + (i * HorizontalItemSize),
+                        startX: gridLinesHorizontalCenter + (i * _horizontalItemSizePixels),
                         startY: 0,
-                        stopX: gridLinesHorizontalCenter + (i * HorizontalItemSize),
+                        stopX: gridLinesHorizontalCenter + (i * _horizontalItemSizePixels),
                         stopY: _screenHeight,
                         paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
                     );
 
                     canvas.DrawLine(
-                        startX: gridLinesHorizontalCenter - (i * HorizontalItemSize),
+                        startX: gridLinesHorizontalCenter - (i * _horizontalItemSizePixels),
                         startY: 0,
-                        stopX: gridLinesHorizontalCenter - (i * HorizontalItemSize),
+                        stopX: gridLinesHorizontalCenter - (i * _horizontalItemSizePixels),
                         stopY: _screenHeight,
                         paint: MajorGridLineInterval > 0 && i % MajorGridLineInterval == 0 ? majorPaint : minorPaint
                     );
