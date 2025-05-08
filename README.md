@@ -37,6 +37,8 @@ public static MauiApp CreateMauiApp()
     var builder = MauiApp.CreateBuilder();
     builder
         .UseMauiApp<App>()
+
+#if DEBUG
         // This will add the rainbow backgrounds by default.
         .UseDebugRainbows();
 
@@ -52,10 +54,14 @@ public static MauiApp CreateMauiApp()
            MinorGridLines = new GridLineOptions { Color = Color.FromRgb(255, 0, 0), Opacity = 1, Width = 1 },
            GridOrigin = DebugGridOrigin.TopLeft,
         });
+#endif
 
     return builder.Build();
 }
 ```
+
+### Scoping to DEBUG
+You would be wise to wrap any of these calls in a preprocessor directive like `#if DEBUG`. Fancy colors in a production app might be fun, but not something I would recommend. Just use the directive that best matches the scenario where you want to use DebugRainbows and you should be good to go.
 
 ### Features
 
